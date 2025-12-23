@@ -2,6 +2,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 //Import from files
 const authRouter = require("./routes/auth");
@@ -11,15 +12,22 @@ const userRouter = require("./routes/user");
 
 //Initialize
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 1000;
 const DB = process.env.MONGO_URI;
 
 //Midleware
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
+
 app.use(authRouter);
 app.use(adminRouter);
 app.use(produtRouter);
 app.use(userRouter);
+
+// Health check
+app.get("/", (req, res) => {
+    res.send("Amazon Clone Backend Running 🚀");
+});
 
 //Connection
 mongoose.connect(DB).then(() => {
