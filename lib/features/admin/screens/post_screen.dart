@@ -42,6 +42,34 @@ class _PostScreenState extends State<PostScreen> {
     fetchProducts();
   }
 
+  void showDeleteDialog(BuildContext context, ProductModel data) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Delete"),
+          content: const Text("Are you sure you want to delete a product?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("No"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                onDelete(data);
+              },
+              child: const Text("Yes", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return prodcuts == null
@@ -88,7 +116,7 @@ class _PostScreenState extends State<PostScreen> {
                             ),
                             IconButton(
                               onPressed: () {
-                                onDelete(data);
+                                showDeleteDialog(context, data);
                               },
                               icon: Icon(Icons.delete, size: 20),
                             ),

@@ -33,7 +33,7 @@ class ProfileServices {
   void logout() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString("x-auth-token", "");
+      await prefs.remove("x-auth-token");
     } catch (e) {
       throw Exception(e.toString());
     }

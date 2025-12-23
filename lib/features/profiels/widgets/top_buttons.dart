@@ -2,7 +2,9 @@ import 'package:amazon_clone/constant/global_variables.dart';
 import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:amazon_clone/features/profiels/services/profile_services.dart';
 import 'package:amazon_clone/features/profiels/widgets/profile_button.dart';
+import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TopButtons extends StatefulWidget {
   const TopButtons({super.key});
@@ -16,11 +18,9 @@ class _TopButtonsState extends State<TopButtons> {
 
   void signOut() async {
     profileServices.logout();
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      AuthScreen.routeName,
-      (route) => false,
-    );
+    Provider.of<UserProvider>(context, listen: false).clearUser();
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, AuthScreen.routeName);
   }
 
   void showLogoutDialog(BuildContext context) {
@@ -40,8 +40,9 @@ class _TopButtonsState extends State<TopButtons> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close dialog
-                signOut;
+                // Close dialog
+                Navigator.pop(context);
+                signOut();
               },
               child: const Text("Yes", style: TextStyle(color: Colors.red)),
             ),
@@ -61,14 +62,6 @@ class _TopButtonsState extends State<TopButtons> {
       ),
       child: Column(
         children: [
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     ProfileButton(text: "Your Orders", onPress: () {}),
-          //     ProfileButton(text: "Turn Seller", onPress: () {}),
-          //   ],
-          // ),
-          // SizedBox(height: Dimensions.height(context) * 0.02),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -84,3 +77,16 @@ class _TopButtonsState extends State<TopButtons> {
     );
   }
 }
+
+
+
+
+
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     ProfileButton(text: "Your Orders", onPress: () {}),
+          //     ProfileButton(text: "Turn Seller", onPress: () {}),
+          //   ],
+          // ),
+          // SizedBox(height: Dimensions.height(context) * 0.02),

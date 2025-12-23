@@ -29,4 +29,19 @@ class UserProvider extends ChangeNotifier {
     _user = _user.copyWith(cart: []);
     notifyListeners();
   }
+
+  // ✅ IMPORTANT FOR LOGOUT
+  void clearUser() {
+    _user = UserModel(
+      id: "",
+      name: "",
+      email: "",
+      password: "",
+      address: "",
+      type: "",
+      token: "",
+      cart: [],
+    );
+    notifyListeners(); // 🔥 this rebuilds UI
+  }
 }
