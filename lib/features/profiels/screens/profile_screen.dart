@@ -12,13 +12,15 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(Dimensions.height(context) * 0.12),
-        child: ProfileCustomAppBar(user: user),
-      ),
-      body: SingleChildScrollView(
-        child: Column(children: [TopButtons(), Orders()]),
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(Dimensions.height(context) * 0.12),
+          child: ProfileCustomAppBar(user: user),
+        ),
+        body: SingleChildScrollView(
+          child: Column(children: [TopButtons(), Orders()]),
+        ),
       ),
     );
   }

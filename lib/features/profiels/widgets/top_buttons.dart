@@ -23,6 +23,34 @@ class _TopButtonsState extends State<TopButtons> {
     );
   }
 
+  void showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Logout"),
+          content: const Text("Are you sure you want to logout?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close dialog
+              },
+              child: const Text("No"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close dialog
+                signOut;
+              },
+              child: const Text("Yes", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,18 +61,21 @@ class _TopButtonsState extends State<TopButtons> {
       ),
       child: Column(
         children: [
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     ProfileButton(text: "Your Orders", onPress: () {}),
+          //     ProfileButton(text: "Turn Seller", onPress: () {}),
+          //   ],
+          // ),
+          // SizedBox(height: Dimensions.height(context) * 0.02),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ProfileButton(text: "Your Orders", onPress: () {}),
-              ProfileButton(text: "Turn Seller", onPress: () {}),
-            ],
-          ),
-          SizedBox(height: Dimensions.height(context) * 0.02),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ProfileButton(text: "Log Out", onPress: () => signOut()),
+              ProfileButton(
+                text: "Log Out",
+                onPress: () => showLogoutDialog(context),
+              ),
               ProfileButton(text: "Your Wish List", onPress: () {}),
             ],
           ),

@@ -34,30 +34,34 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   Widget build(BuildContext context) {
     return earnings == null || totalSales == null
         ? Center(child: CircularProgressIndicator())
-        : Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(Dimensions.height(context) * 0.1),
-              child: AdminCustomAppBar(),
-            ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsetsGeometry.symmetric(
-                  horizontal: Dimensions.width(context) * 0.02,
-                  vertical: Dimensions.height(context) * 0.02,
+        : SafeArea(
+            child: Scaffold(
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(
+                  Dimensions.height(context) * 0.1,
                 ),
-                child: Column(
-                  children: [
-                    Text(
-                      "\u{20B9}$totalSales",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                child: AdminCustomAppBar(),
+              ),
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsetsGeometry.symmetric(
+                    horizontal: Dimensions.width(context) * 0.02,
+                    vertical: Dimensions.height(context) * 0.02,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "\u{20B9}$totalSales",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: Dimensions.height(context) * 0.02),
-                    EarningBarChart(earnings: earnings!),
-                    SizedBox(height: Dimensions.height(context) * 0.02),
-                  ],
+                      SizedBox(height: Dimensions.height(context) * 0.02),
+                      EarningBarChart(earnings: earnings!),
+                      SizedBox(height: Dimensions.height(context) * 0.02),
+                    ],
+                  ),
                 ),
               ),
             ),

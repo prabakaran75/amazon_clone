@@ -46,66 +46,75 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     return prodcuts == null
         ? Center(child: CircularProgressIndicator())
-        : Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(Dimensions.height(context) * 0.1),
-              child: AdminCustomAppBar(),
-            ),
-            body: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: Dimensions.width(context) * 0.02,
-                vertical: Dimensions.height(context) * 0.02,
-              ),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisSpacing: 2,
-                  crossAxisCount: 2,
+        : SafeArea(
+            child: Scaffold(
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(
+                  Dimensions.height(context) * 0.1,
                 ),
-                itemCount: prodcuts!.length,
-                itemBuilder: (context, index) {
-                  final data = prodcuts![index];
-                  return Column(
-                    children: [
-                      Expanded(
-                        child: SizedBox(
-                          child: SignleProductStructure(image: data.images[0]),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              data.productName,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                child: AdminCustomAppBar(),
+              ),
+              body: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: Dimensions.width(context) * 0.02,
+                  vertical: Dimensions.height(context) * 0.02,
+                ),
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: 2,
+                    crossAxisCount: 2,
+                  ),
+                  itemCount: prodcuts!.length,
+                  itemBuilder: (context, index) {
+                    final data = prodcuts![index];
+                    return Column(
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            child: SignleProductStructure(
+                              image: data.images[0],
                             ),
                           ),
-                          IconButton(
-                            onPressed: () {
-                              onDelete(data);
-                            },
-                            icon: Icon(Icons.delete, size: 20),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                },
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                data.productName,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                onDelete(data);
+                              },
+                              icon: Icon(Icons.delete, size: 20),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
+              floatingActionButton: FloatingActionButton(
+                shape: CircleBorder(),
+                backgroundColor: Colors.cyan[700],
+                onPressed: () async {
+                  await Navigator.pushNamed(
+                    context,
+                    AddProductScreen.routeName,
+                  );
+                  fetchProducts();
+                },
+                tooltip: "Add a Product",
+                child: Icon(Icons.add),
+              ),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
             ),
-            floatingActionButton: FloatingActionButton(
-              shape: CircleBorder(),
-              backgroundColor: Colors.cyan[700],
-              onPressed: () async {
-                await Navigator.pushNamed(context, AddProductScreen.routeName);
-                fetchProducts();
-              },
-              tooltip: "Add a Product",
-              child: Icon(Icons.add),
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
           );
   }
 }

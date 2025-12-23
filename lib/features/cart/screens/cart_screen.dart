@@ -23,43 +23,45 @@ class _CartScreenState extends State<CartScreen> {
     user.cart
         .map((e) => sum += e['quantity'] * e['product']['price'] as int)
         .toList();
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(Dimensions.height(context) * 0.15),
-        child: CustomCartAppBar(user: user),
-      ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(
-          horizontal: Dimensions.width(context) * 0.03,
-          vertical: Dimensions.height(context) * 0.02,
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(Dimensions.height(context) * 0.15),
+          child: CustomCartAppBar(user: user),
         ),
-        children: [
-          CartSubtotal(),
-          SizedBox(height: Dimensions.height(context) * 0.02),
-          CustomButton(
-            text: "Proceed to Buy (${user.cart.length} Items)",
-            onpress: () {
-              Navigator.pushNamed(
-                context,
-                AddressScreen.routeName,
-                arguments: sum.toString(),
-              );
-            },
-            color: Colors.amber[400],
+        body: ListView(
+          padding: EdgeInsets.symmetric(
+            horizontal: Dimensions.width(context) * 0.03,
+            vertical: Dimensions.height(context) * 0.02,
           ),
-          SizedBox(height: Dimensions.height(context) * 0.02),
-          ...List.generate(
-            user.cart.length,
-            (index) => CartProduct(index: index),
-          ),
-          // ListView.builder(
-          //   shrinkWrap: true,
-          //   itemCount: user.cart.length,
-          //   itemBuilder: (context, index) {
-          //     return CartProduct(index: index);
-          //   },
-          // ),
-        ],
+          children: [
+            CartSubtotal(),
+            SizedBox(height: Dimensions.height(context) * 0.02),
+            CustomButton(
+              text: "Proceed to Buy (${user.cart.length} Items)",
+              onpress: () {
+                Navigator.pushNamed(
+                  context,
+                  AddressScreen.routeName,
+                  arguments: sum.toString(),
+                );
+              },
+              color: Colors.amber[400],
+            ),
+            SizedBox(height: Dimensions.height(context) * 0.02),
+            ...List.generate(
+              user.cart.length,
+              (index) => CartProduct(index: index),
+            ),
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   itemCount: user.cart.length,
+            //   itemBuilder: (context, index) {
+            //     return CartProduct(index: index);
+            //   },
+            // ),
+          ],
+        ),
       ),
     );
   }

@@ -14,19 +14,21 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(Dimensions.height(context) * 0.15),
-        child: HomeCustomAppBar(user: user),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: Dimensions.height(context) * 0.01),
-            TopCategories(),
-            CarousalImage(),
-            DealOfDay(),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(Dimensions.height(context) * 0.15),
+          child: HomeCustomAppBar(user: user),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: Dimensions.height(context) * 0.01),
+              TopCategories(),
+              CarousalImage(),
+              DealOfDay(),
+            ],
+          ),
         ),
       ),
     );
